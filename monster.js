@@ -1,4 +1,5 @@
-function Monster(x, y) {
+function Monster(monsterID, x, y) {
+  this.monsterID = monsterID;
   this.x = x;
   this.y = y;
   this.firstDirection = "";
