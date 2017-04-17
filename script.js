@@ -13,6 +13,25 @@ $(document).ready(function(){
     $(".monster").on("click", function() {
       this.remove();
     });
+      var dir= monster.randomDirection();
+      var moveX = 0;
+      var moveY = 5;
+      if (dir === "left") moveX = -10;
+      else moveX = 10;
+
+      var movingMonster = setInterval(function () {
+        monster.move(moveX, moveY);
+        if (monster.y<=0) {
+          moveY=10;
+        } else if (monster.y>=500) {
+          moveY=-10;
+        }
+        if (monster.x<=0) {
+          moveX=10;
+        } else if (monster.x>=900) {
+          moveX=-10;
+        }
+      }, 100);
   }, 3000);
 
   // var addFruit = setInterval(function(){
@@ -23,6 +42,8 @@ $(document).ready(function(){
   //   console.log(fruit);
   //   $("#board").append("<div class='fruit' style=top:"+initialY+"px;left:"+initialX+"px;></div>");
   // }, 10000);
+
+
 
 
 });

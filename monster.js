@@ -14,3 +14,12 @@ Monster.prototype.randomDirection = function() {
   }
   return this.firstDirection;
 };
+
+Monster.prototype.move = function(moveX, moveY){
+  var nextX = (this.x += moveX);
+  var nextY = (this.y += moveY);
+  var nextStepX = nextX + "px";
+  var nextStepY = nextY + "px";
+  $('#'+this.monsterID).css("left", nextStepX);
+  $('#'+this.monsterID).css("top", nextStepY);
+};
