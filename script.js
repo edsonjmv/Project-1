@@ -9,4 +9,12 @@ $(document).ready(function(){
     console.log(monster);
   }, 5000);
 
+  var addFruit = setInterval(function(){
+    var initialX = Math.floor(Math.random() * 1000);
+    var initialY = Math.floor(Math.random() * 600);
+    var fruit = new Fruit(initialX, initialY);
+    fruit.randomDirection();
+    console.log(fruit);
+  }, 10000);
+
 });
