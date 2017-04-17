@@ -1,10 +1,13 @@
 function Board() {
   this.monsterArmy = [];
-  this.addMonster = function(monster) {
-    this.monsterArmy.push(monster);
-  };
   this.fruitBasket = [];
-  this.addFruit = function(fruit) {
-    this.fruitBasket.push(fruit);
-  };
+  this.score= 0;
 }
+
+Board.prototype.addMonster = function(monster) {
+  this.monsterArmy.push(monster);
+};
+
+Board.prototype.addFruit = function(fruit) {
+  this.fruitBasket.push(fruit);
+};
