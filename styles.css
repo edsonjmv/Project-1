@@ -91,3 +91,14 @@ body {
   padding: 0;
   margin-top: 35px;
 }
+
+#start-game {
+  height: 100px;
+  width: 300px;
+  position: absolute;
+  top: 250px;
+  left: 350px;
+  border-radius: 30px;
+  visibility: visible;
+  font-size: 30px;
+}

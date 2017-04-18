@@ -23,3 +23,9 @@ Monster.prototype.move = function(moveX, moveY){
   $('#'+this.monsterID).css("left", nextStepX);
   $('#'+this.monsterID).css("top", nextStepY);
 };
+
+// Monster.prototype.eatFruit = function(monster_x, monster_y, fruit_x, fruit_y){
+//   if ((monster.x == fruit.x)&&(monster.y == fruit.y)) alert("collision");
+//   else if ((moveX===-10)&&(ball_y>=paddle_y)&&(ball_y<=paddle_y+60))  moveX=10;
+//   return moveX;
+// };

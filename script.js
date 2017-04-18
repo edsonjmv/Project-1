@@ -3,6 +3,9 @@ $(document).ready(function(){
   var monsterQuantity = 0;
   var game = new Board();
 
+  $('#start-game').on('click', function(){
+    $('#start-game').css("visibility", "hidden");
+
   game.addingMonsters = setInterval(function(){
     var randomID = Math.floor(Math.random() * 1000000);
     var monsterID = randomID;
@@ -16,12 +19,12 @@ $(document).ready(function(){
 
     console.log(game.monsterArmy);
 
-    monsterQuantity = game.monsterArmy.length;
-    $("#quantM").html("<h1>"+monsterQuantity+"</h1>");
-
-    if (game.monsterArmy.length >= 3) {
+    if (game.monsterArmy.length >= 5) {
       $(".game-over").css("visibility", "visible");
+      $(".monster").css("visibility", "hidden");
+      $(".fruit").css("visibility", "hidden");
       console.log("game over");
+      restartGame();
       // clearInterval();
     }
 
@@ -43,25 +46,39 @@ $(document).ready(function(){
         } else if (monster.x >= 940) {
           moveX =- 10;
         }
-      }, 100);
+      }, 50);
   }, 5000);
 
   $(document).on("click", ".monster", function() {
     score += 1;
     this.remove();
     $("#points").html("<h1>"+score+"</h1>");
+    game.monsterArmy = $.grep(game.monsterArmy, function( id ) {
+      return ( id == $('#'+this.monsterID) );
+    });
+    $("#quantM").html("<h1>"+game.monsterArmy.length+"</h1>");
+    console.log(game.monsterArmy.length);
   });
 
-  var addFruit = setInterval(function(){
+  game.addingFruit = setInterval(function(){
   var randomID = Math.floor(Math.random() * 1000000);
   var fruitID = randomID;
     var initialX = Math.floor(Math.random() * 800);
     var initialY = Math.floor(Math.random() * 500);
-    var countdown = setTimeout(function(){
+    // var countdown = setTimeout(function(){
       var fruit = new Fruit(fruitID, initialX, initialY);
       fruit.randomDirection();
+      game.addFruit(fruit);
       console.log(fruit);
       $("#board").append("<div id="+fruitID+"  class='fruit' style=top:"+initialY+"px;left:"+initialX+"px;></div>");
+
+      if (game.monsterArmy.length >= 5) {
+        $(".fruit").css("visibility", "hidden");
+        // clearInterval();
+      }
+
+      // if ((monster.x == fruit.x)&&(monster.y == fruit.y)) alert("collision");
+
 
         var dirF= fruit.randomDirection();
         var moveX = 0;
@@ -82,7 +99,7 @@ $(document).ready(function(){
             moveX =- 10;
           }
         }, 100);
-    }, 500);
+    // }, 500);
 }, 10000);
 
 $(document).on("click", ".fruit", function() {
@@ -90,4 +107,7 @@ $(document).on("click", ".fruit", function() {
   this.remove();
   $("#points").html("<h1>"+score+"</h1>");
 });
+
+});
+
 });
