@@ -51,3 +51,21 @@ body {
   margin-top: 5px;
   font-size: 40px;
 }
+
+.quantity {
+  color: #fff;
+  position: absolute;
+  top: 0px;
+  left: 20px;
+  text-align: center;
+}
+
+.quantity h4 {
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+
+.quantity h1 {
+  margin-top: 5px;
+  font-size: 20px;
+}
