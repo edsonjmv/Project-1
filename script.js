@@ -20,7 +20,7 @@ $(document).ready(function(){
 
     console.log(game.monsterArmy);
 
-    if (game.monsterArmy.length == 5) {
+    if (game.monsterArmy.length == 10) {
       $(".game-over").append("<h1>GAME OVER!</h1>");
       $(".game-over").append("<h4>Your score: "+score+"</h4>");
       clearInterval(game.addingMonsters);
@@ -28,7 +28,7 @@ $(document).ready(function(){
       clearInterval(movingMonster);
     }
 
-    if (game.monsterArmy.length >= 5) {
+    if (game.monsterArmy.length >= 10) {
       $(".game-over").css("visibility", "visible");
       $(".monster").css("visibility", "hidden");
       $(".fruit").css("visibility", "hidden");
@@ -52,9 +52,6 @@ $(document).ready(function(){
           moveX = 10;
         } else if (monster.x >= 940) {
           moveX =- 10;
-        }
-        if (game.fruitBasket.length > 0){
-          game.fruitEaten();
         }
       }, 100);
   }, 1000);
@@ -88,7 +85,7 @@ $(document).ready(function(){
 
 
 
-      if (game.monsterArmy.length >= 5) {
+      if (game.monsterArmy.length >= 10) {
         $(".fruit").css("visibility", "hidden");
       }
 
@@ -142,6 +139,12 @@ $(document).on("click", ".fruit", function() {
 //     alert("collision");
 //   }
 // }, 50);
+
+var eatenFruits = setInterval(function(){
+  if (game.fruitBasket.length > 0){
+    game.fruitEaten();
+  }
+}, 50);
 
 
 }); // closing start game
