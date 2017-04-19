@@ -19,7 +19,12 @@ $(document).ready(function(){
 
     console.log(game.monsterArmy);
 
-    if (game.monsterArmy.length >= 5) {
+    if (game.monsterArmy.length == 3) {
+      $(".game-over").append("<h1>GAME OVER!</h1>");
+      $(".game-over").append("<h4>Your score: "+score+"</h4>");
+    }
+
+    if (game.monsterArmy.length >= 3) {
       $(".game-over").css("visibility", "visible");
       $(".monster").css("visibility", "hidden");
       $(".fruit").css("visibility", "hidden");
@@ -67,12 +72,12 @@ $(document).ready(function(){
     var initialY = Math.floor(Math.random() * 500);
     // var countdown = setTimeout(function(){
       var fruit = new Fruit(fruitID, initialX, initialY);
-      fruit.randomDirection();
+      // fruit.randomDirection();
       game.addFruit(fruit);
       console.log(fruit);
       $("#board").append("<div id="+fruitID+"  class='fruit' style=top:"+initialY+"px;left:"+initialX+"px;></div>");
 
-      if (game.monsterArmy.length >= 5) {
+      if (game.monsterArmy.length >= 3) {
         $(".fruit").css("visibility", "hidden");
         // clearInterval();
       }
@@ -80,25 +85,25 @@ $(document).ready(function(){
       // if ((monster.x == fruit.x)&&(monster.y == fruit.y)) alert("collision");
 
 
-        var dirF= fruit.randomDirection();
-        var moveX = 0;
-        var moveY = 5;
-        if (dirF === "left") moveX = -10;
-        else moveX = 10;
-
-        var movingFruit = setInterval(function () {
-          fruit.move(moveX, moveY);
-          if (fruit.y <= 0) {
-            moveY = 10;
-          } else if (fruit.y >= 540) {
-            moveY =- 10;
-          }
-          if (fruit.x <= 0) {
-            moveX = 10;
-          } else if (fruit.x >= 940) {
-            moveX =- 10;
-          }
-        }, 100);
+        // var dirF= fruit.randomDirection();
+        // var moveX = 0;
+        // var moveY = 5;
+        // if (dirF === "left") moveX = -10;
+        // else moveX = 10;
+        //
+        // var movingFruit = setInterval(function () {
+        //   fruit.move(moveX, moveY);
+        //   if (fruit.y <= 0) {
+        //     moveY = 10;
+        //   } else if (fruit.y >= 540) {
+        //     moveY =- 10;
+        //   }
+        //   if (fruit.x <= 0) {
+        //     moveX = 10;
+        //   } else if (fruit.x >= 940) {
+        //     moveX =- 10;
+        //   }
+        // }, 100);
     // }, 500);
 }, 10000);
 
