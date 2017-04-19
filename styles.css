@@ -102,3 +102,11 @@ body {
   visibility: visible;
   font-size: 30px;
 }
+
+#missingF {
+  display: none;
+}
+
+#missingM {
+  display: none;
+}

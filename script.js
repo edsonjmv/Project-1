@@ -3,6 +3,7 @@ $(document).ready(function(){
   var monsterQuantity = 0;
   var game = new Board();
 
+
   $('#start-game').on('click', function(){
     $('#start-game').css("visibility", "hidden");
 
@@ -14,23 +15,24 @@ $(document).ready(function(){
     var monster = new Monster(monsterID, initialX, initialY);
     monster.randomDirection();
     game.addMonster(monster);
-    console.log(monster);
+    // console.log(monster);
     $("#board").append("<div id="+monsterID+" class='monster' style=top:"+initialY+"px;left:"+initialX+"px;></div>");
 
     console.log(game.monsterArmy);
 
-    if (game.monsterArmy.length == 3) {
+    if (game.monsterArmy.length == 5) {
       $(".game-over").append("<h1>GAME OVER!</h1>");
       $(".game-over").append("<h4>Your score: "+score+"</h4>");
+      clearInterval(game.addingMonsters);
+      clearInterval(game.addingFruit);
+      clearInterval(movingMonster);
     }
 
-    if (game.monsterArmy.length >= 3) {
+    if (game.monsterArmy.length >= 5) {
       $(".game-over").css("visibility", "visible");
       $(".monster").css("visibility", "hidden");
       $(".fruit").css("visibility", "hidden");
       console.log("game over");
-      restartGame();
-      // clearInterval();
     }
 
       var dir= monster.randomDirection();
@@ -51,8 +53,11 @@ $(document).ready(function(){
         } else if (monster.x >= 940) {
           moveX =- 10;
         }
-      }, 50);
-  }, 5000);
+        if (game.fruitBasket.length > 0){
+          game.fruitEaten();
+        }
+      }, 100);
+  }, 1000);
 
   $(document).on("click", ".monster", function() {
     score += 1;
@@ -74,12 +79,17 @@ $(document).ready(function(){
       var fruit = new Fruit(fruitID, initialX, initialY);
       // fruit.randomDirection();
       game.addFruit(fruit);
-      console.log(fruit);
+      // console.log(fruit);
       $("#board").append("<div id="+fruitID+"  class='fruit' style=top:"+initialY+"px;left:"+initialX+"px;></div>");
+      $(".fruit").addClass("animated infinite rubberBand");
 
-      if (game.monsterArmy.length >= 3) {
+      console.log(game.fruitBasket);
+
+
+
+
+      if (game.monsterArmy.length >= 5) {
         $(".fruit").css("visibility", "hidden");
-        // clearInterval();
       }
 
       // if ((monster.x == fruit.x)&&(monster.y == fruit.y)) alert("collision");
@@ -105,14 +115,35 @@ $(document).ready(function(){
         //   }
         // }, 100);
     // }, 500);
-}, 10000);
+}, 1000);
 
 $(document).on("click", ".fruit", function() {
   score -= 1;
   this.remove();
   $("#points").html("<h1>"+score+"</h1>");
-});
+  game.fruitBasket = $.grep(game.fruitBasket, function( id ) {
+    return ( id == $('#'+this.fruitID) );
+  });
+}); // closing click on fruit
 
-});
 
-});
+// var eatingFruit = setInterval(function(){
+//
+//   var monsterX = document.getElementsByClassName("monster").style.left;
+//   var monsterY = document.getElementsByClassName("monster").style.top;
+//   var fruitX = document.getElementsByClassName("fruit").style.left;
+//   var fruitY = document.getElementsByClassName("fruit").style.top;
+//
+//
+//   if (monsterX == fruitX) {
+//     alert("collision");
+//   }
+//   if (monsterY == fruitY) {
+//     alert("collision");
+//   }
+// }, 50);
+
+
+}); // closing start game
+
+});  //closing document ready
