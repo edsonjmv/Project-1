@@ -21,13 +21,17 @@ Board.prototype.fruitEaten = function() {
        var yF = fruitY + 50;
 
        if (Math.sqrt((xF-xM)^2+(yF-yM)^2) <= 0) {
-         console.log('collide');
+         $("#"+f.fruitID).css("visibility", "hidden");
        }
 
      });
    });
-
 };
+
+// Board.prototype.fruitLost = function(){
+//   $("#"+f.fruitID).css("height", "500px");
+//   return;
+// };
 
 Board.prototype.addMonster = function(monster) {
   this.monsterArmy.push(monster);

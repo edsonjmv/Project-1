@@ -24,8 +24,59 @@ Monster.prototype.move = function(moveX, moveY){
   $('#'+this.monsterID).css("top", nextStepY);
 };
 
-// Monster.prototype.eatFruit = function(monster_x, monster_y, fruit_x, fruit_y){
-//   if ((monster.x == fruit.x)&&(monster.y == fruit.y)) alert("collision");
-//   else if ((moveX===-10)&&(ball_y>=paddle_y)&&(ball_y<=paddle_y+60))  moveX=10;
-//   return moveX;
+function moveByDegrees(distance, angle) {
+  var rad = angle * Math.pi / 180;
+  this.x += Math.cos(rad) * distance;
+  this.y += Math.sin(rad) * distance;
+}
+
+
+
+
+// Monster.prototype.mover = function(monster,value){
+//   monster.css({left:value});
 // };
+//
+// Monster.prototype.applySpeed = function(monster, speed, intervalRender){
+//   var that = this;
+//   var position = 0;
+//   setInterval(function(){
+//     var step = speed*intervalRender/1000;
+//     position = position + step;
+//     console.log(position);
+//     that.mover(monster,position);
+//   },intervalRender);
+// };
+
+// var square_1 = $(".one");
+// var square_2 = $(".two");
+// var squareSpeed = 500;
+
+// applySpeed(square_1, squareSpeed, 500);
+// applySpeed(square_2, squareSpeed, 30);
+
+
+
+
+
+
+// function move(element,value){
+//   element.css({left:value});
+// }
+//
+// function applySpeed(element, speed, intervalRender){
+//   var position = 0;
+//   setInterval(function(){
+//     var step = speed*intervalRender/1000;
+//     position = position + step;
+//     console.log(position);
+//     move(element,position);
+//   },intervalRender)
+// }
+//
+// var square_1 = $(".one");
+// var square_2 = $(".two");
+// var squareSpeed = 500;
+//
+// applySpeed(square_1, squareSpeed, 500)
+// applySpeed(square_2, squareSpeed, 30)

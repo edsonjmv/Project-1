@@ -1,7 +1,9 @@
 $(document).ready(function(){
+
   var score = 0;
   var monsterQuantity = 0;
   var game = new Board();
+  var squareSpeed = 500;
 
 
   $('#start-game').on('click', function(){
@@ -15,12 +17,13 @@ $(document).ready(function(){
     var monster = new Monster(monsterID, initialX, initialY);
     monster.randomDirection();
     game.addMonster(monster);
+    // monster.applySpeed(monster, squareSpeed, 500);
     // console.log(monster);
     $("#board").append("<div id="+monsterID+" class='monster' style=top:"+initialY+"px;left:"+initialX+"px;></div>");
 
     console.log(game.monsterArmy);
 
-    if (game.monsterArmy.length == 10) {
+    if (game.monsterArmy.length == 5) {
       $(".game-over").append("<h1>GAME OVER!</h1>");
       $(".game-over").append("<h4>Your score: "+score+"</h4>");
       clearInterval(game.addingMonsters);
@@ -28,12 +31,18 @@ $(document).ready(function(){
       clearInterval(movingMonster);
     }
 
-    if (game.monsterArmy.length >= 10) {
+    if (game.monsterArmy.length >= 5) {
       $(".game-over").css("visibility", "visible");
       $(".monster").css("visibility", "hidden");
       $(".fruit").css("visibility", "hidden");
+      $(".blood").css("visibility", "hidden");
       console.log("game over");
     }
+
+    // var monst = $('#'+this.monsterID);
+    // var squareSpeed = 500;
+    //
+    // monster.applySpeed(monst, squareSpeed, 30);
 
       var dir= monster.randomDirection();
       var moveX = 0;
@@ -56,13 +65,23 @@ $(document).ready(function(){
       }, 100);
   }, 1000);
 
-  $(document).on("click", ".monster", function() {
+  $(document).on("click", ".monster", function(event) {
     score += 1;
-    this.remove();
+    var identificator = event.currentTarget.id;
+    console.log(event);
+    $("#hit-sound")[0].play();
+    $("#board").append("<div class='blood'</div>");
+    $(".blood").css( {position:"absolute", top:event.pageY, left: event.pageX});
     $("#points").html("<h1>"+score+"</h1>");
-    game.monsterArmy = $.grep(game.monsterArmy, function( id ) {
-      return ( id == $('#'+this.monsterID) );
+    game.monsterArmy.forEach(function(element, index, array){
+      if(element.monsterID === parseInt(identificator)) {
+        array.splice(index,1);
+      }
     });
+    // game.monsterArmy = $.grep(game.monsterArmy, function(id) {
+    //   return id != event.target.id;
+    // });
+    this.remove();
     $("#quantM").html("<h1>"+game.monsterArmy.length+"</h1>");
     console.log(game.monsterArmy.length);
   });
@@ -82,37 +101,10 @@ $(document).ready(function(){
 
       console.log(game.fruitBasket);
 
-
-
-
-      if (game.monsterArmy.length >= 10) {
+      if (game.monsterArmy.length >= 5) {
         $(".fruit").css("visibility", "hidden");
       }
-
-      // if ((monster.x == fruit.x)&&(monster.y == fruit.y)) alert("collision");
-
-
-        // var dirF= fruit.randomDirection();
-        // var moveX = 0;
-        // var moveY = 5;
-        // if (dirF === "left") moveX = -10;
-        // else moveX = 10;
-        //
-        // var movingFruit = setInterval(function () {
-        //   fruit.move(moveX, moveY);
-        //   if (fruit.y <= 0) {
-        //     moveY = 10;
-        //   } else if (fruit.y >= 540) {
-        //     moveY =- 10;
-        //   }
-        //   if (fruit.x <= 0) {
-        //     moveX = 10;
-        //   } else if (fruit.x >= 940) {
-        //     moveX =- 10;
-        //   }
-        // }, 100);
-    // }, 500);
-}, 1000);
+}, 10000);
 
 $(document).on("click", ".fruit", function() {
   score -= 1;
@@ -122,23 +114,6 @@ $(document).on("click", ".fruit", function() {
     return ( id == $('#'+this.fruitID) );
   });
 }); // closing click on fruit
-
-
-// var eatingFruit = setInterval(function(){
-//
-//   var monsterX = document.getElementsByClassName("monster").style.left;
-//   var monsterY = document.getElementsByClassName("monster").style.top;
-//   var fruitX = document.getElementsByClassName("fruit").style.left;
-//   var fruitY = document.getElementsByClassName("fruit").style.top;
-//
-//
-//   if (monsterX == fruitX) {
-//     alert("collision");
-//   }
-//   if (monsterY == fruitY) {
-//     alert("collision");
-//   }
-// }, 50);
 
 var eatenFruits = setInterval(function(){
   if (game.fruitBasket.length > 0){
