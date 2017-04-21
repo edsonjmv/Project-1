@@ -3,11 +3,19 @@ $(document).ready(function(){
   var score = 0;
   var monsterQuantity = 0;
   var game = new Board();
-  var squareSpeed = 500;
-
+  var moveAnt = 100;
+  var includeAnts = 1000;
+  var keys = {};
 
   $('#start-game').on('click', function(){
     $('#start-game').css("visibility", "hidden");
+
+    $(document).keydown(function(e){
+      keys[e.keyCode] = true;
+      if (keys[38]){
+        includeAnts -= 100;
+      }
+    });
 
   game.addingMonsters = setInterval(function(){
     var randomID = Math.floor(Math.random() * 1000000);
@@ -17,12 +25,10 @@ $(document).ready(function(){
     var monster = new Monster(monsterID, initialX, initialY);
     monster.randomDirection();
     game.addMonster(monster);
-    // monster.applySpeed(monster, squareSpeed, 500);
-    // console.log(monster);
     $("#board").append("<div id="+monsterID+" class='monster' style=top:"+initialY+"px;left:"+initialX+"px;></div>");
 
-
     if (game.monsterArmy.length == 5) {
+      $("#wrong")[0].play();
       $(".game-over").append("<h1>GAME OVER!</h1>");
       $(".game-over").append("<h4>Your score: "+score+"</h4>");
       clearInterval(game.addingMonsters);
@@ -36,11 +42,6 @@ $(document).ready(function(){
       $(".fruit").css("visibility", "hidden");
       $(".blood").css("visibility", "hidden");
     }
-
-    // var monst = $('#'+this.monsterID);
-    // var squareSpeed = 500;
-    //
-    // monster.applySpeed(monst, squareSpeed, 30);
 
       var dir= monster.randomDirection();
       var moveX = 0;
@@ -61,8 +62,9 @@ $(document).ready(function(){
           moveX =- 10;
         }
         $("#quantM").html("<h1>"+game.monsterArmy.length+"</h1>");
-      }, 100);
-  }, 1000);
+
+      }, moveAnt);
+  }, includeAnts);
 
   $(document).on("click", ".monster", function(event) {
     score += 1;
@@ -76,9 +78,6 @@ $(document).ready(function(){
         array.splice(index,1);
       }
     });
-    // game.monsterArmy = $.grep(game.monsterArmy, function(id) {
-    //   return id != event.target.id;
-    // });
     this.remove();
   });
 
@@ -87,11 +86,8 @@ $(document).ready(function(){
   var fruitID = randomID;
     var initialX = Math.floor(Math.random() * 800);
     var initialY = Math.floor(Math.random() * 500);
-    // var countdown = setTimeout(function(){
       var fruit = new Fruit(fruitID, initialX, initialY);
-      // fruit.randomDirection();
       game.addFruit(fruit);
-      // console.log(fruit);
       $("#board").append("<div id="+fruitID+"  class='fruit' style=top:"+initialY+"px;left:"+initialX+"px;></div>");
       $(".fruit").addClass("animated infinite rubberBand");
 
@@ -118,7 +114,6 @@ var eatenFruits = setInterval(function(){
       score -= 20;
     }
 }, 50);
-
 
 }); // closing start game
 

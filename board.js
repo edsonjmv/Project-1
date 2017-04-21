@@ -22,26 +22,9 @@ Board.prototype.fruitEaten = function() {
            console.log('collision');
         }
 
-
-
-
-      //  var xM = monsterX + 60;
-      //  var yM = monsterY + 60;
-      //  var xF = fruitX + 60;
-      //  var yF = fruitY + 60;
-       //
-      //  if (Math.sqrt((xF-xM)^2+(yF-yM)^2) <= 0) {
-      //    console.log("collision");
-      //  }
-
      });
    });
 };
-
-// Board.prototype.fruitLost = function(){
-//   $("#"+f.fruitID).css("height", "500px");
-//   return;
-// };
 
 Board.prototype.addMonster = function(monster) {
   this.monsterArmy.push(monster);
