@@ -27,8 +27,8 @@ body {
 }
 
 .fruit {
-  width: 60px;
-  height: 50px;
+  width: 120px;
+  height: 100px;
   background-image: url("images/fruit2.png");
   background-size: cover;
   background-repeat: no-repeat;

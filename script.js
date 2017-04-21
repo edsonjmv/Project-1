@@ -21,7 +21,6 @@ $(document).ready(function(){
     // console.log(monster);
     $("#board").append("<div id="+monsterID+" class='monster' style=top:"+initialY+"px;left:"+initialX+"px;></div>");
 
-    console.log(game.monsterArmy);
 
     if (game.monsterArmy.length == 5) {
       $(".game-over").append("<h1>GAME OVER!</h1>");
@@ -36,7 +35,6 @@ $(document).ready(function(){
       $(".monster").css("visibility", "hidden");
       $(".fruit").css("visibility", "hidden");
       $(".blood").css("visibility", "hidden");
-      console.log("game over");
     }
 
     // var monst = $('#'+this.monsterID);
@@ -62,13 +60,13 @@ $(document).ready(function(){
         } else if (monster.x >= 940) {
           moveX =- 10;
         }
+        $("#quantM").html("<h1>"+game.monsterArmy.length+"</h1>");
       }, 100);
   }, 1000);
 
   $(document).on("click", ".monster", function(event) {
     score += 1;
     var identificator = event.currentTarget.id;
-    console.log(event);
     $("#hit-sound")[0].play();
     $("#board").append("<div class='blood'</div>");
     $(".blood").css( {position:"absolute", top:event.pageY, left: event.pageX});
@@ -82,8 +80,6 @@ $(document).ready(function(){
     //   return id != event.target.id;
     // });
     this.remove();
-    $("#quantM").html("<h1>"+game.monsterArmy.length+"</h1>");
-    console.log(game.monsterArmy.length);
   });
 
   game.addingFruit = setInterval(function(){
@@ -99,26 +95,28 @@ $(document).ready(function(){
       $("#board").append("<div id="+fruitID+"  class='fruit' style=top:"+initialY+"px;left:"+initialX+"px;></div>");
       $(".fruit").addClass("animated infinite rubberBand");
 
-      console.log(game.fruitBasket);
-
       if (game.monsterArmy.length >= 5) {
         $(".fruit").css("visibility", "hidden");
       }
-}, 10000);
+}, 3000);
 
-$(document).on("click", ".fruit", function() {
-  score -= 1;
-  this.remove();
+$(document).on("click", ".fruit", function(event) {
+  score -= 5;
+  $("#error")[0].play();
+  var identifi = event.currentTarget.id;
   $("#points").html("<h1>"+score+"</h1>");
-  game.fruitBasket = $.grep(game.fruitBasket, function( id ) {
-    return ( id == $('#'+this.fruitID) );
+  game.fruitBasket.forEach(function(element, index, array){
+    if(element.fruitID === parseInt(identifi)) {
+      array.splice(index,1);
+    }
   });
+    this.remove();
 }); // closing click on fruit
 
 var eatenFruits = setInterval(function(){
-  if (game.fruitBasket.length > 0){
-    game.fruitEaten();
-  }
+    if (game.fruitEaten()){
+      score -= 20;
+    }
 }, 50);
 
 

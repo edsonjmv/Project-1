@@ -15,14 +15,24 @@ Board.prototype.fruitEaten = function() {
        var fruitY = $("#"+f.fruitID).css("top").slice(0,-2);
        var fruitX = $("#"+f.fruitID).css("left").slice(0,-2);
 
-       var xM = monsterX + 50;
-       var yM = monsterY + 50;
-       var xF = fruitX + 50;
-       var yF = fruitY + 50;
+       if (monsterX < fruitX + 180 &&
+         monsterX + 75 > fruitX &&
+         monsterY < fruitY + 150 &&
+         90 + monsterY > fruitY) {
+           console.log('collision');
+        }
 
-       if (Math.sqrt((xF-xM)^2+(yF-yM)^2) <= 0) {
-         $("#"+f.fruitID).css("visibility", "hidden");
-       }
+
+
+
+      //  var xM = monsterX + 60;
+      //  var yM = monsterY + 60;
+      //  var xF = fruitX + 60;
+      //  var yF = fruitY + 60;
+       //
+      //  if (Math.sqrt((xF-xM)^2+(yF-yM)^2) <= 0) {
+      //    console.log("collision");
+      //  }
 
      });
    });
